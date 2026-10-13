@@ -1,0 +1,24 @@
+### 1. Lister les contacts (GET)
+GET http://localhost:3000/contacts
+
+### 2. Ajouter un contact (POST)
+POST http://localhost:3000/contacts
+Content-Type: application/json
+
+{
+    "name": "Alice",
+    "age": 28
+}
+
+### 3. Mettre à jour un contact (PUT)
+# (Remplace l'ID par un vrai ID récupéré via la requête GET)
+PUT http://localhost:3000/contacts/6acdff00c5ad7b7248682033
+Content-Type: application/json
+
+{
+    "age": 29
+}
+
+### 4. Supprimer un contact (DELETE)
+# (Remplace l'ID par un vrai ID)
+DELETE http://localhost:3000/contacts/6acdff00c5ad7b7248682033
