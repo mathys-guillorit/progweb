@@ -3,3 +3,50 @@ GET http://localhost:5000/
 
 ### Default API URL
 GET http://localhost:5000/api/
+
+### Add a new user
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "1234"
+}
+
+### Connect user
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "1234"
+}
+
+### Get all contacts
+GET http://localhost:5000/api/contacts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZWI1NTU5YWYzMmYxMmZiNjBhZDIyMiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJpYXQiOjE3OTM4MDc3NDQsImV4cCI6MTc5Mzg5NDE0NH0.30KBQU0L4gAjwlawXJvDSOsWkH6ab46dPlsjHJVUp8c
+
+### Get a contact by ID
+GET http://localhost:5000/api/contacts/6ace007a57ba480dd70b6777
+
+### Add a new contact
+POST http://localhost:5000/api/contacts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZWI1NTU5YWYzMmYxMmZiNjBhZDIyMiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJpYXQiOjE3OTM4MDc3NDQsImV4cCI6MTc5Mzg5NDE0NH0.30KBQU0L4gAjwlawXJvDSOsWkH6ab46dPlsjHJVUp8c
+
+{
+    "name": "toto",
+    "age": 30
+}
+
+### Update an existing contact
+PUT http://localhost:5000/api/contacts/6ace007a57ba480dd70b6777
+Content-Type: application/json
+
+{
+    "name": "Alain",
+    "age": 31
+}
+
+### Delete a contact
+DELETE http://localhost:5000/api/contacts/6aeb010fb0852324e0ce65fa
