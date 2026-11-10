@@ -1,0 +1,174 @@
+docker build -t web .
+
+[+] Building 10.5s (11/11) FINISHED                                                                                                                                                                        docker:default
+ => [internal] load build definition from Dockerfile                                                                                                                                                                 0.0s
+ => => transferring dockerfile: 155B                                                                                                                                                                                 0.0s
+ => [internal] load metadata for docker.io/library/node:23-alpine                                                                                                                                                    1.0s
+ => [auth] library/node:pull token for registry-1.docker.io                                                                                                                                                          0.0s
+ => [internal] load .dockerignore                                                                                                                                                                                    0.0s
+ => => transferring context: 2B                                                                                                                                                                                      0.0s
+ => [1/5] FROM docker.io/library/node:23-alpine@sha256:a34e14ef1df25b58258956049ab5a71ea7f0d498e41d0b514f4b8de09af09456                                                                                              3.0s
+ => => resolve docker.io/library/node:23-alpine@sha256:a34e14ef1df25b58258956049ab5a71ea7f0d498e41d0b514f4b8de09af09456                                                                                              0.1s
+ => => sha256:c9ddb8507f841fcb28003ed1a2f32d68d43e79296cab55b37f19e7f0f61982dd 446B / 446B                                                                                                                           0.1s
+ => => sha256:1b67613f0a721f5e91ffb2f49054a3c73c4c840bf8d7f882c9b2c08f85e0893f 1.26MB / 1.26MB                                                                                                                       0.2s
+ => => sha256:fe07684b16b82247c3539ed86a65ff37a76138ec25d380bd80c869a1a4c73236 3.80MB / 3.80MB                                                                                                                       0.4s
+ => => sha256:dfb92eddc1a1cc8909288d09ef3781f8be90d926b68c536be670c2ae59adc0f4 51.77MB / 51.77MB                                                                                                                     1.3s
+ => => extracting sha256:fe07684b16b82247c3539ed86a65ff37a76138ec25d380bd80c869a1a4c73236                                                                                                                            0.3s
+ => => extracting sha256:dfb92eddc1a1cc8909288d09ef3781f8be90d926b68c536be670c2ae59adc0f4                                                                                                                            1.2s
+ => => extracting sha256:1b67613f0a721f5e91ffb2f49054a3c73c4c840bf8d7f882c9b2c08f85e0893f                                                                                                                            0.0s
+ => => extracting sha256:c9ddb8507f841fcb28003ed1a2f32d68d43e79296cab55b37f19e7f0f61982dd                                                                                                                            0.0s
+ => [internal] load build context                                                                                                                                                                                    0.4s
+ => => transferring context: 2.30MB                                                                                                                                                                                  0.3s
+ => [2/5] WORKDIR /app                                                                                                                                                                                               2.0s
+ => [3/5] COPY package*.json ./                                                                                                                                                                                      0.0s
+ => [4/5] RUN npm install                                                                                                                                                                                            1.8s
+ => [5/5] COPY . .                                                                                                                                                                                                   0.2s 
+ => exporting to image                                                                                                                                                                                               2.2s 
+ => => exporting layers                                                                                                                                                                                              0.4s
+ => => exporting manifest sha256:d184f4db1d630a2a6040e74a3fc40d38cccc5036ce54ef630fae782553ceedb1                                                                                                                    0.0s
+ => => exporting config sha256:01f2a755057575f05ad3878c7a00c93b1b642a0c5fbe7f7924df5f7849febe0c                                                                                                                      0.0s
+ => => exporting attestation manifest sha256:ba381637d42e89ce21b1b987a5d8f7fc38b61ce42f64e0838201a4497971a973                                                                                                        0.0s
+ => => exporting manifest list sha256:e8c02062a43234d4070547966c0cb87104aef9e742bcc3b847074cd4feea9711                                                                                                               0.0s
+ => => naming to docker.io/library/web:latest                                                                                                                                                                        0.0s
+ => => unpacking to docker.io/library/web:latest 
+
+////////////////////////////////////////////////
+
+docker images
+                                                                                                                                                                                                      i Info →   U  In Use
+IMAGE        ID             DISK USAGE   CONTENT SIZE   EXTRA
+web:latest   e8c02062a432        248MB         59.7MB     
+
+////////////////////////////////////////////////
+
+apres le .dockerignore
+
+docker images
+                                                                                                                                                                                                      i Info →   U  In Use
+IMAGE        ID             DISK USAGE   CONTENT SIZE   EXTRA
+web:latest   d2854a6a54d7        243MB           59MB 
+
+////////////////////////////////////////////////
+
+docker run -d -p 8090:80 web
+
+be970efe2dc230b1a3c02e6afad52863c8ef83f9434ebdc9c44bd274cde40e40
+
+////////////////////////////////////////////////
+
+docker ps
+
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                  NAMES
+be970efe2dc2   web       "docker-entrypoint.s…"   54 seconds ago   Up 54 seconds   0.0.0.0:8090->80/tcp   xenodochial_newton
+
+////////////////////////////////////////////////
+
+docker stop be970efe2dc230b1a3c02e6afad52863c8ef83f9434ebdc9c44bd274cde40e40
+
+be970efe2dc230b1a3c02e6afad52863c8ef83f9434ebdc9c44bd274cde40e40
+
+////////////////////////////////////////////////
+
+docker ps
+
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+////////////////////////////////////////////////
+
+apres avoir modifer pour mettre Hello ! j'ai executé :
+docker build -t web .
+docker images
+docker run -d -p 8090:80 web
+
+////////////////////////////////////////////////
+
+docker pull alpine
+
+Using default tag: latest
+latest: Pulling from library/alpine
+7b229517ed22: Pull complete 
+3ec36f3670df: Download complete 
+3da1513d2124: Download complete 
+Digest: sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a
+Status: Downloaded newer image for alpine:latest
+docker.io/library/alpine:latest
+
+////////////////////////////////////////////////
+
+docker run -it --rm alpine /bin/sh
+/ # ls
+bin    dev    etc    home   lib    media  mnt    opt    proc   root   run    sbin   srv    sys    tmp    usr    var
+/ # cd home
+/home # ls
+/home # cd ..
+/ # ls lib
+apk                    firmware               ld-musl-x86_64.so.1    libc.musl-x86_64.so.1  modules-load.d         sysctl.d
+/ # ls bin
+arch           chattr         dd             egrep          getopt         iostat         linux64        makemime       mountpoint     ping           reformime      setpriv        su             uname
+ash            chgrp          df             false          grep           ipcalc         ln             mkdir          mpstat         ping6          rev            setserial      sync           usleep
+base64         chmod          dmesg          fatattr        gunzip         kbd_mode       login          mknod          mv             pipe_progress  rm             sh             tar            watch
+bbconfig       chown          dnsdomainname  fdflush        gzip           kill           ls             mktemp         netstat        printenv       rmdir          sleep          touch          zcat
+busybox        cp             dumpkmap       fgrep          hostname       link           lsattr         more           nice           ps             run-parts      stat           true
+cat            date           echo           fsync          ionice         linux32        lzop           mount          pidof          pwd            sed            stty           umount
+/ # ls usr
+bin    lib    local  sbin   share
+/ # cd run
+/run # ls
+lock
+/run # cd ..
+/ # exit
+
+////////////////////////////////////////////////
+
+docker run -d -p 8090:80 web
+docker exec -it 93afbd31a9be96e006fa5415c117182cece4d128ca525df7c61a369123a3b7b0 /bin/sh
+/app # apk update && apk add vim
+/app # vim src/index.js
+/app # exit
+
+////////////////////////////////////////////////
+pour les bind mounts
+
+docker run -p 80:80 -v $(pwd)/src:/app/src web
+
+> td6@1.0.0 start
+> node --watch src/index.js
+
+Server is running on port 80
+Restarting 'src/index.js
+
+docker exec -it 838e888140b6 /bin/sh
+/app # echo "modif" >> src/index.js 
+
+////////////////////////////////////////////////
+
+docker volume create volume_test
+volume_test
+
+docker volume inspect volume_test
+[
+    {
+        "CreatedAt": "2026-11-04T20:24:25Z",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/volume_test/_data",
+        "Name": "volume_test",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+
+docker run --name conteneur_source -v volume_test:/app alpine sh -c "echo 'Test de persistance' > /app/preuve.txt"
+
+docker rm -f conteneur_source
+conteneur_source
+
+docker run --rm -v volume_test:/workspace alpine cat /workspace/preuve.txt
+Test de persistance
+
+docker volume ls
+DRIVER    VOLUME NAME
+local     volume_test
+
+docker volume rm volume_test
+volume_test
