@@ -5,9 +5,15 @@ import connectDB from "./config/db.js";
 import routes from './routes/index.js';
 import swaggerJsDoc from 'swagger-jsdoc';
 import { serve, setup } from 'swagger-ui-express';
+import { createClient } from 'redis';
 
 const port = 80;
+const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
+export const redisClient = createClient({ url: redisUrl });
 
+redisClient.on('error', (err) => console.error('Redis Client Error', err));
+await redisClient.connect();
+console.log('Connect to Redis');
 
 const options = {
     definition: {

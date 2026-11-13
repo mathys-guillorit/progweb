@@ -3,7 +3,13 @@ import { getAllContacts, getContactById, updateContact, removeContact, addContac
 import { registerUser, loginUser } from '../controllers/authController.js';
 import requireAuth from '../middleware/authMiddleware.js';
 
+import { redisClient } from '../server.js';
+
 const router = Router();
+
+function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+}
 
 router.get('/', function (req, res) {
     res.status(200).json({
@@ -115,12 +121,26 @@ router.post('/auth/login', async (req, res) => {
  *       '401':
  *         description: Missing, invalid, or expired bearer token
  */
-router.route('/contacts').get(requireAuth, async (req, res) => {
-    let response = await getAllContacts();
-    if (response.success == true) {
-        res.status(200).json(response);
-    } else {
-        res.status(404).json(response);
+router.route('/contacts').get(/* requireAuth ,*/ async (req, res) => {
+    try {
+        const cacheKey = 'contacts_list';
+        const cachedContacts = await redisClient.get(cacheKey);
+        if (cachedContacts) {
+            console.log("Data retrieved from the Redis cache");
+            return res.status(200).json(JSON.parse(cachedContacts));
+        }
+        console.log("Empty cache, querying the database via the controller...");
+        await delay(2000);
+        let response = await getAllContacts();
+        if (response.success == true) {
+            await redisClient.setEx(cacheKey, 60, JSON.stringify(response));
+            res.status(200).json(response);
+        } else {
+            res.status(404).json(response);
+        }
+    } catch (error) {
+        console.error("Error with the Redis cache :", error);
+        res.status(500).json({ success: false, message: "Server error"});
     }
 });
 

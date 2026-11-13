@@ -1,0 +1,22 @@
+services:
+  api:
+    build: 
+      context: ./api
+      dockerfile: Dockerfile.prod
+    ports:
+      - "3000:80"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+      - DB_NAME=td7
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:8.0
+    environment:
+      - MONGO_INITDB_DATABASE=td7
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
